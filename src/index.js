@@ -53,14 +53,14 @@ dogCardMaker({ imageURL: "https://www.grayson.com", breed: "Lorem" });
 //    * ON FAILURE: log the error to the console
 //    * IN ANY CASE: log "done" to the console
 
-function getDogs(count) {
+function getDogs(breed, count) {
   axios
-    .get(`https://dog.ceo/api/breeds/image/random/${count}`)
+    .get(`https://dog.ceo/api/breed/${breed}/images/random/${count}`)
     .then((res) => {
       res.data.message.forEach((imageURL) => {
         const dogCard = dogCardMaker({
           imageURL: imageURL,
-          breed: "Grayson",
+          breed: breed,
         });
         entryPoint.appendChild(dogCard);
       });
@@ -69,7 +69,10 @@ function getDogs(count) {
     .finally(() => console.log("Done!"));
 }
 
-getDogs(5);
+document.querySelector("button").addEventListener("click", () => {
+  getDogs("mastiff, 3");
+  getDogs("appenzeller, 3");
+});
 
 // 👉 (OPTIONAL) TASK 6- Wrap the fetching operation inside a function `getDogs`
 // that takes a breed and a count (of dogs)
