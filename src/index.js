@@ -1,3 +1,5 @@
+import axios from "axios";
+
 // 👉 TASK 1- Test out the following endpoints:
 
 //  https://dog.ceo/api/breeds/image/random
@@ -50,6 +52,24 @@ dogCardMaker({ imageURL: "https://www.grayson.com", breed: "Lorem" });
 //    * ON SUCCESS: use the data to create dogCards and append them to the entry point
 //    * ON FAILURE: log the error to the console
 //    * IN ANY CASE: log "done" to the console
+
+function getDogs(count) {
+  axios
+    .get(`https://dog.ceo/api/breeds/image/random/${count}`)
+    .then((res) => {
+      res.data.message.forEach((imageURL) => {
+        const dogCard = dogCardMaker({
+          imageURL: imageURL,
+          breed: "Grayson",
+        });
+        entryPoint.appendChild(dogCard);
+      });
+    })
+    .catch((err) => {})
+    .finally(() => console.log("Done!"));
+}
+
+getDogs(5);
 
 // 👉 (OPTIONAL) TASK 6- Wrap the fetching operation inside a function `getDogs`
 // that takes a breed and a count (of dogs)
